@@ -3,9 +3,9 @@
 		<div class="header__wrapper">
 			<div class="container">
 				<TheNav />
-				<div class="cart">
+				<div class="cart-toggle" @click="toggleCart" :class="cartClass">
 					<font-awesome icon="shopping-cart" />
-					<p class="cart__info">Cart (0)</p>
+					<p class="cart__info">Cart ({{ getTotalItems }})</p>
 				</div>
 			</div>
 		</div>
@@ -14,10 +14,28 @@
 
 <script>
 import TheNav from "@/components/TheNav.vue";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
 	components: {
 		TheNav,
+	},
+	data() {
+		return {
+			isOpen: false,
+		};
+	},
+	methods: mapMutations(["toggleCart"]),
+	computed: {
+		...mapGetters(["cartIsOpen", "getTotalItems"]),
+		cartClass() {
+			return {
+				isopen: this.cartIsOpen,
+			};
+		},
+	},
+	created() {
+		this.cartToggle;
 	},
 };
 </script>
@@ -42,10 +60,15 @@ export default {
 	align-items: center;
 }
 
-.cart {
+.cart-toggle {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
+	transition: $tr;
+
+	&:hover {
+		color: $bright;
+	}
 }
 
 svg {

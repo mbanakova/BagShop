@@ -1,13 +1,13 @@
 <template>
-	<div class="cart">
+	<div class="cart" :class="cartClass">
 		<div class="cart__header">
 			<div class="cart__title">
 				<font-awesome icon="shopping-cart" />
-				<p class="cart__info">Cart (0)</p>
+				<p class="cart__info">Cart ({{ getTotalItems }})</p>
 			</div>
-			<button>
-				<font-awesome icon="xmark" />
-			</button>
+			<div class="menu-btn" @click="toggleCart">
+				<div class="menu-burger"></div>
+			</div>
 		</div>
 		<div class="cart__body">
 			<CartTable />
@@ -23,12 +23,27 @@
 <script>
 // @ is an alias to /src
 import CartTable from "@/components/CartTable.vue";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
 	name: "Home",
 	components: {
 		CartTable,
 	},
+	data() {
+		return {
+			isOpen: false,
+		};
+	},
+	computed: {
+		...mapGetters(["getCart", "cartIsOpen", "getTotalItems"]),
+		cartClass() {
+			return {
+				isopen: this.cartIsOpen,
+			};
+		},
+	},
+	methods: mapMutations(["toggleCart"]),
 };
 </script>
 
@@ -43,6 +58,16 @@ export default {
 	z-index: 200;
 	background-color: $navy;
 	color: $white;
+	position: fixed;
+	transform: translateX(100%);
+	box-sizing: border-box;
+	transition: all 0.5s ease-out;
+	opacity: 0;
+
+	&.isopen {
+		transform: translateX(0);
+		opacity: 1;
+	}
 }
 
 .cart__header {
@@ -50,6 +75,52 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.menu-btn {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	right: 0;
+	transition: $tr;
+	border-radius: 5px;
+	cursor: pointer;
+
+	&:hover .menu-burger::before,
+	&:hover .menu-burger::after {
+		background-color: $accent;
+	}
+}
+
+.menu-burger {
+	width: 34px;
+	height: 34px;
+	box-shadow: none;
+	transition: $tr;
+	position: relative;
+
+	&::before,
+	&::after {
+		position: absolute;
+		content: "";
+		width: 32px;
+		height: 4px;
+		right: 0;
+		background-color: $white;
+		border-radius: 5px;
+		transition: $tr;
+	}
+
+	&::before {
+		transform: rotate(45deg) translate(12px, 9px);
+	}
+
+	&::after {
+		transform: rotate(-45deg) translate(-9px, 12px);
+	}
 }
 
 .cart__title {

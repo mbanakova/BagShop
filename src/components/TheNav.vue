@@ -25,6 +25,7 @@ export default {};
 	position: relative;
 	padding: 10px;
 	text-decoration: none;
+	transition: $tr;
 
 	&::after {
 		position: absolute;
@@ -37,6 +38,10 @@ export default {};
 		background-color: $bright;
 
 		transition: 0.3s ease-in-out all;
+	}
+
+	&:hover {
+		color: $bright;
 	}
 }
 

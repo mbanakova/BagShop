@@ -1,28 +1,50 @@
 <template>
-	<li class="product__item">
-		<h3 class="product__title">Eco bag</h3>
+	<li class="product__item" :id="id">
+		<h3 class="product__title">{{ title }}</h3>
 		<div class="product__img">
 			<!-- <img src="" alt="" /> -->
 			<font-awesome icon="shopping-bag" />
 		</div>
 		<div class="product__group product__color">
 			<h4>Color:</h4>
-			<p>pink</p>
+			<span class="product__color-square" :style="{ backgroundColor: color }"></span>
+			<p>{{ color }}</p>
 		</div>
 		<div class="product__group product__price">
 			<h4>Price:</h4>
-			<p>500 ₽</p>
+			<p>{{ price }} ₽</p>
 		</div>
 		<div class="product__group product__quantity">
 			<h4>Quantity:</h4>
-			<input class="product__input" type="number" name="" id="" />
+			<input class="product__input" type="number" min="1" v-model="quantity" />
 		</div>
-		<button class="app__button" type="button">Add to cart</button>
+		<button class="app__button" type="button" @click="addToCart(id)">Add to cart</button>
 	</li>
 </template>
 
 <script>
-export default {};
+export default {
+	props: ["id", "title", "color", "img", "price"],
+	data() {
+		return {
+			quantity: 1,
+		};
+	},
+	methods: {
+		// async addToCart(id, quantity) {
+		// 	this.$store.dispatch("addToCart", { id: quantity });
+		// },
+		async addToCart() {
+			const item = {
+				id: this.id,
+				quantity: this.quantity,
+			};
+			this.$store.dispatch("addToCart", item);
+			this.$store.dispatch("updateTotalItems");
+			console.log(item);
+		},
+	},
+};
 </script>
 
 <style lang="scss" scoped>
@@ -60,6 +82,13 @@ svg {
 	& p {
 		margin: 0;
 	}
+}
+
+.product__color-square {
+	width: 20px;
+	height: 20px;
+	border: 1px solid $light;
+	border-radius: 50%;
 }
 
 .product__add {

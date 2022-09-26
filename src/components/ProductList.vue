@@ -1,19 +1,26 @@
 <template>
 	<ul>
-		<ProductItem />
-		<ProductItem />
-		<ProductItem />
-		<ProductItem />
+		<ProductItem v-for="product in products" :key="product.id" :id="product.id" :title="product.title" :color="product.color" :img="product.img" :price="product.price" :quantity="product.quantity" />
 	</ul>
 </template>
 
 <script>
 import ProductItem from "@/components/ProductItem.vue";
+import { mapGetters } from "vuex";
 
 export default {
 	name: "Products",
 	components: {
 		ProductItem,
+	},
+	// created() {
+	// 	this.getProducts();
+	// },
+
+	computed: {
+		...mapGetters({
+			products: ["getProducts"],
+		}),
 	},
 };
 </script>
