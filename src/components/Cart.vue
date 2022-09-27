@@ -12,7 +12,7 @@
 		<div class="cart__body">
 			<CartTable />
 			<div class="cart__footer">
-				<h3>Total: $1.00</h3>
+				<h3>Total: {{ getTotalCost }} ₽</h3>
 				<button class="app__button" type="button">Checkout</button>
 			</div>
 			<p class="cart__empty">You have no items in the cart yet!</p>
@@ -36,7 +36,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(["getCart", "cartIsOpen", "getTotalItems"]),
+		...mapGetters(["cartIsOpen", "getTotalItems", "getTotalCost"]),
 		cartClass() {
 			return {
 				isopen: this.cartIsOpen,

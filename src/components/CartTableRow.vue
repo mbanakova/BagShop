@@ -1,10 +1,10 @@
 <template>
 	<tr>
 		<td><font-awesome icon="shopping-bag" /></td>
-		<td>Bag</td>
-		<td>$ 1.00</td>
-		<td>1</td>
-		<td>$ 1.00</td>
+		<td>{{ title }}, {{ color }}</td>
+		<td>{{ price }} ₽</td>
+		<td>{{ quantity }}</td>
+		<td>{{ price * quantity }} ₽</td>
 		<td>
 			<button><font-awesome icon="xmark" /></button>
 		</td>
@@ -12,7 +12,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+	props: ["id", "title", "color", "price", "quantity"],
+};
 </script>
 
 <style lang="scss" scoped>

@@ -11,19 +11,23 @@
 			</tr>
 		</thead>
 		<tbody>
-			<CartTableRow />
-			<CartTableRow />
-			<CartTableRow />
+			<CartTableRow v-for="row in cartTable" :key="row.id" :id="row.id" :title="row.title" :color="row.color" :price="row.price" :quantity="row.quantity" />
 		</tbody>
 	</table>
 </template>
 
 <script>
 import CartTableRow from "@/components/CartTableRow.vue";
+import { mapGetters } from "vuex";
 
 export default {
 	components: {
 		CartTableRow,
+	},
+	computed: {
+		...mapGetters({
+			cartTable: ["getCart"],
+		}),
 	},
 };
 </script>

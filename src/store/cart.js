@@ -1,12 +1,15 @@
 export default {
   state: {
     cart:
-    {
-      b1: 0,
-      b2: 0,
-      b3: 0,
-      b4: 0,
-    },
+      // {
+      //   b1: { quantity: 0 },
+      //   b2: { quantity: 0 },
+      //   b3: { quantity: 0 },
+      //   b4: { quantity: 0 },
+      // },
+      [
+
+      ],
     totalItems: 0,
     totalCost: 0,
     isOpen: false
@@ -15,9 +18,14 @@ export default {
     addToCart(context, item) {
       const cartItem = {
         id: item.id,
-        quantity: item.quantity
+        title: item.title,
+        color: item.color,
+        price: item.price,
+        quantity: item.quantity,
       }
       context.commit('addToCart', cartItem);
+      context.commit('updateTotalItems', cartItem.quantity);
+      context.commit('updateTotalCost', cartItem.quantity * cartItem.price);
       console.log(cartItem);
     },
     updateTotalItems(context) {
@@ -29,10 +37,13 @@ export default {
   },
   mutations: {
     addToCart(state, payload) {
-      state.cart[payload.id] = payload.quantity;
+      state.cart.push(payload);
     },
-    updateTotalItems(state) {
-      state.totalItems = Object.values(state.cart).reduce((a, b) => a + b);
+    updateTotalItems(state, payload) {
+      state.totalItems += payload;
+    },
+    updateTotalCost(state, payload) {
+      state.totalCost += payload;
     },
     toggleCart(state) {
       state.isOpen = !state.isOpen

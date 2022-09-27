@@ -31,17 +31,15 @@ export default {
 		};
 	},
 	methods: {
-		// async addToCart(id, quantity) {
-		// 	this.$store.dispatch("addToCart", { id: quantity });
-		// },
 		async addToCart() {
 			const item = {
 				id: this.id,
+				title: this.title,
+				color: this.color,
+				price: this.price,
 				quantity: this.quantity,
 			};
 			this.$store.dispatch("addToCart", item);
-			this.$store.dispatch("updateTotalItems");
-			console.log(item);
 		},
 	},
 };
