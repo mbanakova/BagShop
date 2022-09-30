@@ -1,22 +1,25 @@
 <template>
-	<div class="cart" :class="cartClass">
-		<div class="cart__header">
-			<div class="cart__title">
-				<font-awesome icon="shopping-cart" />
-				<p class="cart__info">Cart ({{ getTotalItems }})</p>
+	<div class="cart-container">
+		<div v-if="this.cartIsOpen" class="cart-backdrop" @click="toggleCart"></div>
+		<div class="cart" :class="cartClass">
+			<div class="cart__header">
+				<div class="cart__title">
+					<font-awesome icon="shopping-cart" />
+					<p class="cart__info">Cart ({{ getTotalItems }})</p>
+				</div>
+				<div class="menu-btn" @click="toggleCart">
+					<div class="menu-burger"></div>
+				</div>
 			</div>
-			<div class="menu-btn" @click="toggleCart">
-				<div class="menu-burger"></div>
+			<div class="cart__body" v-if="cartIsNotEmpty">
+				<CartTable />
+				<div class="cart__footer">
+					<h3>Total: {{ getTotalCost }} ₽</h3>
+					<button class="app__button" type="button">Checkout</button>
+				</div>
 			</div>
+			<p class="cart__empty" v-else>You have no items in the cart yet!</p>
 		</div>
-		<div class="cart__body" v-if="cartIsNotEmpty">
-			<CartTable />
-			<div class="cart__footer">
-				<h3>Total: {{ getTotalCost }} ₽</h3>
-				<button class="app__button" type="button">Checkout</button>
-			</div>
-		</div>
-		<p class="cart__empty" v-else>You have no items in the cart yet!</p>
 	</div>
 </template>
 
@@ -48,6 +51,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cart-container {
+	height: 100%;
+	width: 100%;
+}
+
+.cart-backdrop {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 100;
+	position: fixed;
+	top: 58px;
+	left: 0;
+	transition: 1s all ease-in-out;
+}
 .cart {
 	position: absolute;
 	content: "";

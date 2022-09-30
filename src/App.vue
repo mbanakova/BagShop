@@ -89,6 +89,11 @@ body {
 		opacity: 0;
 	}
 
+	&:hover {
+		background-color: darken($bright, 10%);
+		border-color: darken($bright, 10%);
+	}
+
 	&:hover::after,
 	&:active::after {
 		opacity: 1;

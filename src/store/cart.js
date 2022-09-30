@@ -17,7 +17,14 @@ export default {
       context.commit('addToCart', cartItem);
       context.commit('updateTotalItems', cartItem.quantity);
       context.commit('updateTotalCost', cartItem.quantity * cartItem.price);
-      // console.log(cartItem);
+    },
+    deleteFromCart(context, item) {
+      const cartItem = {
+        id: item.id,
+        price: item.price,
+        quantity: item.quantity,
+      }
+      context.commit('deleteFromCart', cartItem);
     },
     updateTotalItems(context) {
       context.commit('updateTotalItems', context)
@@ -38,8 +45,26 @@ export default {
       if (!itemExistsInCart) {
         state.cart.push(payload);
       }
-    }
-    ,
+    },
+    deleteFromCart(state, payload) {
+      console.log(state.cart, payload.id);
+
+      let itemExistsInCart = state.cart.find((item, index) => {
+        if (item.id === payload.id) {
+          state.cart.splice(index, 1);
+          console.log(state.cart);
+          return true;
+        }
+      });
+
+      if (itemExistsInCart) {
+        state.totalItems -= payload.quantity;
+        state.totalCost -= (payload.price * payload.quantity);
+      }
+
+
+      // state.cart.splice(payload.id, 1);
+    },
     updateTotalItems(state, payload) {
       state.totalItems += payload;
     },

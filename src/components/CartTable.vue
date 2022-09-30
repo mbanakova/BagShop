@@ -45,5 +45,13 @@ export default {
 		border-bottom: 1px solid $bright;
 		background-color: $dark;
 	}
+
+	& tr {
+		transition: $tr;
+
+		&:hover {
+			background-color: $dark;
+		}
+	}
 }
 </style>
