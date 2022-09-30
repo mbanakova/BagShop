@@ -7,9 +7,7 @@ export default {
       //   b3: { quantity: 0 },
       //   b4: { quantity: 0 },
       // },
-      [
-
-      ],
+      [],
     totalItems: 0,
     totalCost: 0,
     isOpen: false
@@ -52,6 +50,9 @@ export default {
   getters: {
     getCart(state) {
       return state.cart;
+    },
+    cartIsNotEmpty(state) {
+      return state.cart && state.cart.length > 0;
     },
     getTotalItems(state) {
       return state.totalItems;

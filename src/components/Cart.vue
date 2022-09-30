@@ -9,14 +9,14 @@
 				<div class="menu-burger"></div>
 			</div>
 		</div>
-		<div class="cart__body">
+		<div class="cart__body" v-if="cartIsNotEmpty">
 			<CartTable />
 			<div class="cart__footer">
 				<h3>Total: {{ getTotalCost }} ₽</h3>
 				<button class="app__button" type="button">Checkout</button>
 			</div>
-			<p class="cart__empty">You have no items in the cart yet!</p>
 		</div>
+		<p class="cart__empty" v-else>You have no items in the cart yet!</p>
 	</div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(["cartIsOpen", "getTotalItems", "getTotalCost"]),
+		...mapGetters(["cartIsOpen", "getTotalItems", "getTotalCost", "cartIsNotEmpty"]),
 		cartClass() {
 			return {
 				isopen: this.cartIsOpen,
@@ -142,6 +142,7 @@ export default {
 
 .cart__empty {
 	margin: 0;
+	padding: 20px;
 	text-align: center;
 }
 
