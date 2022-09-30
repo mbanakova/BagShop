@@ -4,6 +4,7 @@
 			<tr>
 				<th>Img</th>
 				<th>Product</th>
+				<th>Color</th>
 				<th>Price</th>
 				<th>Qty</th>
 				<th>Total</th>

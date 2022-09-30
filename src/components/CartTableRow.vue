@@ -1,7 +1,8 @@
 <template>
 	<tr>
 		<td><font-awesome icon="shopping-bag" /></td>
-		<td>{{ title }}, {{ color }}</td>
+		<td>{{ title }}</td>
+		<td>{{ color }}</td>
 		<td>{{ price }} ₽</td>
 		<td>{{ quantity }}</td>
 		<td>{{ price * quantity }} ₽</td>

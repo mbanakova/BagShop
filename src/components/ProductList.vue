@@ -13,9 +13,6 @@ export default {
 	components: {
 		ProductItem,
 	},
-	// created() {
-	// 	this.getProducts();
-	// },
 
 	computed: {
 		...mapGetters({

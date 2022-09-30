@@ -1,13 +1,6 @@
 export default {
   state: {
-    cart:
-      // {
-      //   b1: { quantity: 0 },
-      //   b2: { quantity: 0 },
-      //   b3: { quantity: 0 },
-      //   b4: { quantity: 0 },
-      // },
-      [],
+    cart: [],
     totalItems: 0,
     totalCost: 0,
     isOpen: false
@@ -24,7 +17,7 @@ export default {
       context.commit('addToCart', cartItem);
       context.commit('updateTotalItems', cartItem.quantity);
       context.commit('updateTotalCost', cartItem.quantity * cartItem.price);
-      console.log(cartItem);
+      // console.log(cartItem);
     },
     updateTotalItems(context) {
       context.commit('updateTotalItems', context)
@@ -35,8 +28,18 @@ export default {
   },
   mutations: {
     addToCart(state, payload) {
-      state.cart.push(payload);
-    },
+      let itemExistsInCart = state.cart.find((item, index) => {
+        if (item.id === payload.id) {
+          state.cart[index].quantity += payload.quantity;
+          return true;
+        }
+      });
+
+      if (!itemExistsInCart) {
+        state.cart.push(payload);
+      }
+    }
+    ,
     updateTotalItems(state, payload) {
       state.totalItems += payload;
     },
