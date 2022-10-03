@@ -2,7 +2,7 @@
 	<nav class="nav">
 		<router-link to="/" class="button">Home</router-link>
 		<router-link to="/products" class="button">Products</router-link>
-		<router-link to="/orders" class="button">Past Orders</router-link>
+		<router-link to="/checkout" class="button">Checkout</router-link>
 	</nav>
 </template>
 

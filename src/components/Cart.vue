@@ -15,7 +15,7 @@
 				<CartTable />
 				<div class="cart__footer">
 					<h3>Total: {{ getTotalCost }} ₽</h3>
-					<button class="app__button" type="button">Checkout</button>
+					<router-link class="app__button" to="/checkout" @click="toggleCart">Checkout</router-link>
 				</div>
 			</div>
 			<p class="cart__empty" v-else>You have no items in the cart yet!</p>
