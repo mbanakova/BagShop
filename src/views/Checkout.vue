@@ -1,5 +1,8 @@
 <template>
 	<main class="checkout">
+		<base-dialog :show="!!error" title="Not enough data!" @close="handleError">
+			<p>{{ error }}</p>
+		</base-dialog>
 		<div class="container">
 			<h1>Checkout</h1>
 			<form @submit.prevent="submitForm" class="form">
@@ -41,6 +44,9 @@
 				<button class="app__button">Confirm</button>
 			</form>
 		</div>
+		<transition name="slide" appear>
+			<div class="info info--warning" v-if="!isValid">{{ error }}</div></transition
+		>
 	</main>
 </template>
 
@@ -54,10 +60,9 @@ export default {
 			delivery: "selfPickup",
 			room: "",
 			payment: "cash",
+			error: null,
+			isValid: true,
 		};
-	},
-	components: {
-		// ProductList,
 	},
 	computed: {
 		validateUserName() {
@@ -71,21 +76,26 @@ export default {
 		},
 	},
 	methods: {
-		submitForm() {
+		validateForm() {
 			if (this.userName.length < 2) {
-				console.log("name = at least 2 characters");
+				this.error = "Name must be at least 2 characters";
 				return;
 			} else if (!this.userEmail.includes("@") || !this.userEmail.includes(".ru")) {
-				console.log("invalid email");
+				this.error = "Email must contain @ and .ru";
 				return;
 			} else if (this.delivery === "deliver" && this.room === "") {
-				console.log(this.delivery, this.room, "enter the room number");
+				this.error = "Add the room number";
 				return;
 			} else console.log("submitted");
-			console.log(this.userName);
-			console.log(this.userEmail);
-			console.log(this.delivery, this.room);
-			console.log(this.payment);
+		},
+		submitForm() {
+			this.validateForm();
+			setTimeout(() => {
+				this.error = false;
+			}, 2000);
+		},
+		handleError() {
+			this.error = null;
 		},
 	},
 };
@@ -234,5 +244,29 @@ input.room {
 	&.empty {
 		border-color: $accent;
 	}
+}
+.info {
+	padding: 20px;
+	text-align: center;
+	border: 1px solid #82fdd2;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+	width: 300px;
+	margin: 0 auto;
+
+	&--warning {
+		border: 1px solid $warning;
+		background-color: lighten($warning, 50%);
+	}
+}
+.slide-enter-active,
+.slide-leave-active {
+	transition: transform 0.5s;
+}
+.slide-enter-from {
+	transform: translateX(-100vw);
+}
+.slide-enter,
+.slide-leave-to {
+	transform: translateX(100vw);
 }
 </style>
